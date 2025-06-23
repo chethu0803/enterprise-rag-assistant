@@ -25,3 +25,35 @@ dist-ssr
 
 env
 .env.local
+# === Node.js / React Frontend ===
+frontend/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.env
+frontend/.env.local
+frontend/.DS_Store
+
+# === Python Backend ===
+backend/__pycache__/
+backend/*.py[cod]
+backend/env/
+backend/venv/
+backend/.env
+backend/.DS_Store
+
+# === General / OS files ===
+*.log
+*.sqlite3
+.env
+.DS_Store
+.vscode/
+.idea/
+*.swp
+
+# === Optional: ignore coverage/test files ===
+.coverage
+htmlcov/
+coverage.xml
+pytest_cache/
+__pycache__/
+.cache/
