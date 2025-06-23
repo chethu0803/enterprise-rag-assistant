@@ -9,7 +9,6 @@ const Home = () => {
           <nav className="space-x-8 hidden md:flex">
             <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Features</a>
             <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">Docs</a>
-            <a href="#" className="text-slate-600 hover:text-slate-900 transition-colors font-medium">GitHub</a>
           </nav>
           <button className="md:hidden p-2 rounded-md bg-slate-100 text-slate-700 hover:bg-slate-200 transition-colors">Menu</button>
         </div>

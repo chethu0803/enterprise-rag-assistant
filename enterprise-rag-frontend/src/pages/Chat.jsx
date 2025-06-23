@@ -2,7 +2,7 @@ import { useState } from 'react';
 import ChatHeader from '../components/ChatHeader';
 import ChatInput from '../components/ChatInput';
 import ChatMessages from '../components/ChatMessages';
-
+import { sendMessage } from '../utils/api';
 
 const Chat = () => {
   const [messages, setMessages] = useState([
@@ -16,7 +16,7 @@ const Chat = () => {
   ]);
   const [isTyping, setIsTyping] = useState(false);
   
-  const handleSendMessage = (content) => {
+  const handleSendMessage = async (content) => {
     const newMessage = {
       id: Date.now(),
       type: 'user',
@@ -27,18 +27,23 @@ const Chat = () => {
     setMessages(prev => [...prev, newMessage]);
     setIsTyping(true);
     
-    // Simulate bot response
-    setTimeout(() => {
-      const botResponse = {
-        id: Date.now() + 1,
-        type: 'bot',
-        content: 'I understand your question. Let me search through your documents to find the most relevant information...',
-        timestamp: new Date(),
-        sources: ['Document 1.pdf', 'Report 2023.docx']
-      };
-      setMessages(prev => [...prev, botResponse]);
-      setIsTyping(false);
-    }, 2000);
+    try {
+    const data = await sendMessage(newMessage);
+    
+    const botMessage = {
+      id: Date.now() + 1,
+      type: 'bot',
+      content: data.response,
+      timestamp: new Date(),
+    };
+
+    setMessages(prev => [...prev, botMessage]);
+  } catch (error) {
+    console.error('Failed to get bot reply', error);
+  } finally {
+    setIsTyping(false);
+  }
+
   };
 
   return (
