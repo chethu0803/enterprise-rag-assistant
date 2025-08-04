@@ -6,9 +6,9 @@ const ChatHeader = () => {
     <header className="bg-white/80 backdrop-blur-sm border-b border-slate-200 px-6 py-4 shadow-sm">
       <div className="flex items-center justify-between max-w-7xl mx-auto">
         <div className="flex items-center space-x-4">
-          <div className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center">
-            <div className="w-4 h-4 bg-white rounded-sm opacity-90"></div>
-          </div>
+          <a className="w-8 h-8 bg-gradient-to-br from-indigo-500 to-indigo-600 rounded-lg flex items-center justify-center" href='/'>
+            <div className="w-4 h-4 bg-white rounded-sm opacity-90" ></div>
+          </a>
           <div>
             <h1 className="text-xl font-semibold text-slate-900">RAG Assistant</h1>
             <p className="text-sm text-slate-500">Ready to answer your questions</p>

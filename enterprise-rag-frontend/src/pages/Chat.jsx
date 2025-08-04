@@ -15,36 +15,73 @@ const Chat = () => {
     }
   ]);
   const [isTyping, setIsTyping] = useState(false);
-  
+
   const handleSendMessage = async (content) => {
-    const newMessage = {
-      id: Date.now(),
+    const timestamp = new Date();
+    const id = Date.now();
+
+    const userMessage = {
+      id,
       type: 'user',
       content,
-      timestamp: new Date()
+      timestamp
     };
-    
-    setMessages(prev => [...prev, newMessage]);
+
+    // Only add user message initially
+    setMessages(prev => [...prev, userMessage]);
     setIsTyping(true);
-    
+
     try {
-    const data = await sendMessage(newMessage);
-    
-    const botMessage = {
-      id: Date.now() + 1,
-      type: 'bot',
-      content: data.response,
-      timestamp: new Date(),
-    };
+      let fullMessage = '';
+      let botMessageAdded = false;
+      const botId = id + 1;
 
-    setMessages(prev => [...prev, botMessage]);
-  } catch (error) {
-    console.error('Failed to get bot reply', error);
-  } finally {
-    setIsTyping(false);
-  }
+      await sendMessage(
+        {
+          id,
+          type: 'user',
+          content,
+          timestamp: timestamp.toISOString()
+        },
+        (chunk) => {
+          fullMessage += chunk;
 
+          if (!botMessageAdded) {
+            // Add bot message on first chunk
+            setMessages(prev => [...prev, {
+              id: botId,
+              type: 'bot',
+              content: fullMessage,
+              timestamp,
+              sources: []
+            }]);
+            botMessageAdded = true;
+          } else {
+            // Update existing bot message
+            setMessages(prev =>
+              prev.map(msg =>
+                msg.id === botId ? { ...msg, content: fullMessage } : msg
+              )
+            );
+          }
+        }
+      );
+    } catch (error) {
+      console.error('Streaming failed:', error);
+      setMessages(prev => [
+        ...prev,
+        {
+          id: Date.now() + 2,
+          type: 'bot',
+          content: '⚠️ Sorry, something went wrong while fetching the response.',
+          timestamp: new Date(),
+        }
+      ]);
+    } finally {
+      setIsTyping(false);
+    }
   };
+
 
   return (
     <div className="flex flex-col h-screen bg-slate-50">

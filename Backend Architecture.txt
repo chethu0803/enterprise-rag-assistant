@@ -1,0 +1,28 @@
+[Frontend UI]
+    |
+    v
+[API Gateway (FastAPI/Nginx)]
+    ├──> Auth Service
+    ├──> Query Service
+    │     └──> Retrieval Layer (Vector + Keyword Hybrid)
+    │            ├── Vector DB (Qdrant / Weaviate / Pinecone)
+    │            ├── BM25 / ElasticSearch
+    │            └── Re-ranker (Cohere Rerank / LLM)
+    │     └──> LLM Orchestrator (OpenAI / Mistral / vLLM)
+    └──> Document Ingest Service
+          ├── PDF/Text/Image Processor
+          ├── Chunker (RecursiveTextSplitter, etc.)
+          ├── Embedder (BGE / MiniLM / OpenAI)
+          └── Storage:
+                - S3 / GCS (Original)
+                - Qdrant / FAISS (Chunks)
+                - Postgres (Metadata)
+
+Feature	                Why it's awesome
+✅ Reranking	        Boosts accuracy dramatically
+✅ Metadata filters	Filter by author, tags, topic
+✅ Streaming answers	Real-time UX with sse/starlette
+✅ Multimodal search	Extend to images, audio
+✅ Access control	Document-level security
+✅ Real-time analytics	Monitor most-used queries
+✅ Feedback loop  	Mark answers good/bad & improve models
