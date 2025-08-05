@@ -11,10 +11,11 @@
     │     └──> LLM Orchestrator (Gemini API)
     └──> Document Ingest Service
           ├── PDF
-          ├── Chunker (RecursiveTextSplitter, etc.)
+          ├── Chunker (Chunker, etc.)
           ├── Embedder (Hugging Face/Open source)
           └── Storage:
                 - local
-                - Qdrant / FAISS (Chunks)
+                - Qdrant
                 - Postgres (Metadata)
+
 
